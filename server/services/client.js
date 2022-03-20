@@ -106,7 +106,7 @@ module.exports = ({ strapi }) => ({
 
     // Update a comment
     async update(id, relation, data, user = undefined) {
-        const { content, upvotes, downvotes } = data;
+        const { content, upvotes, downvotes, authorAvatar } = data;
 
         const singleRelationFulfilled = relation && REGEX.relatedUid.test(relation)
 
@@ -131,7 +131,7 @@ module.exports = ({ strapi }) => ({
             if (await this.getCommonService().checkBadWords(content)) {
                 const entity = await strapi.db.query(getModelUid('comment')).update({
                     where: { id },
-                    data: { content, upvotes, downvotes },
+                    data: { content, upvotes, downvotes, authorAvatar },
                     populate: { threadOf: true, authorUser: true },
                 });
                 return this.getCommonService().sanitizeCommentEntity(entity);
