@@ -71,13 +71,15 @@ module.exports = {
 
     buildAuthorModel: (item) => {
         const { authorUser, authorId, authorName, authorEmail, authorAvatar, ...rest } = item;
-        let author = {};
+        let author = {
+          avatar: authorAvatar
+        };
         if (authorUser) {
             author = {
                 id: authorUser.id,
                 name: authorUser.username,
                 email: authorUser.email,
-                avatar: authorUser.avatar,
+                avatar: authorUser.avatar ? authorUser.avatar : authorAvatar,
             };
         } else if(authorId) {
             author = {
